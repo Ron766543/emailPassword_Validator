@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email & Password Validator</title>
+    <style>
+        /* Reset & base */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Card container */
+        .card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+            outline: none;
+        }
+
+        .error-message,
+        .success-message {
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+            /* JS will toggle */
+        }
+
+        .error-message {
+            color: #e63946;
+        }
+
+        .success-message {
+            color: #2a9d8f;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Validator Form</h2>
+        <form id="validatorForm" novalidate autocomplete="off">
+            <!-- Email -->
+            <div class="field">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+                <p class="error-message" id="emailError">Please enter a valid email.</p>
+                <p class="success-message" id="emailSuccess">Email looks good!</p>
+            </div>
+
+            <!-- Password -->
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+                <p class="error-message" id="passwordError">Password must meet requirements.</p>
+                <p class="success-message" id="passwordSuccess">Password looks strong!</p>
+            </div>
+
+            <button type="submit">Validate</button>
+        </form>
+    </div>
+
+    <!-- Your JS will go here -->
+    <script>
+        let form = document.querySelector("form");
+        let email = document.querySelector("#email");
+        let password = document.querySelector("#password");
+        form.addEventListener("submit", function (dets) {
+            dets.preventDefault();
+            document.querySelector("#emailError").style.display = "none";
+            document.querySelector("#passwordError").style.display = "none";
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            let emailField = emailRegex.test(email.value);
+            let passwordField = passwordRegex.test(password.value);
+
+            if (!emailField) {
+                document.querySelector("#emailError").style.display = "block";
+                document.querySelector("#emailError").style.display = "initial";
+                // document.querySelector(".error-message").style.display = "initial";
+            }
+            else {
+                document.querySelector("#emailSuccess").style.display = "block"
+                document.querySelector("#emailSuccess").style.display = "initial"
+                // document.querySelector(".success-message").style.display = "initial";
+            }
+
+            if (!passwordField) {
+                document.querySelector("#passwordError").style.display = "block";
+                document.querySelector("#passwordError").style.display = "initial";
+                // document.querySelector(".error-message").style.display = "initial";
+
+            }
+            else {
+                document.querySelector("#passwordSuccess").style.display = "block";
+                document.querySelector("#passwordSuccess").style.display = "initial";
+                // document.querySelector(".success-message").style.display = "initial";
+            }
+        })
+    </script>
+</body>
+
+</html>
